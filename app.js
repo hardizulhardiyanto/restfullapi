@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost/CMS', {
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dataRouter = require('./routes/data');
+var dataDatesRouter = require('./routes/dataDates');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/data', dataRouter);
+app.use('/api/dataDates', dataDatesRouter);
 
 
 module.exports = app;

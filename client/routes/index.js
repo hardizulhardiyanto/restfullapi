@@ -3,6 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
+  console.log("");
+  console.log("===== ROuter");
+  console.log("");
+
+  
   res.render('index', { title: 'Express' });
 });
 

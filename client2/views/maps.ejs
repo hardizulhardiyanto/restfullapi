@@ -16,7 +16,7 @@
         <div class="card-body">
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Project</h1>
+                <h1 class="h2">Maps Data</h1>
             </div>
 
             <div class="card">
@@ -30,37 +30,36 @@
                         <input type="hidden" name="page" value="1">
 
                         <div class="form-group row">
-                            <label for="checkpro1" class="col-sm-3 col-form-label">ID</label>
+                            <label for="checkpro1" class="col-sm-3 col-form-label">Title</label>
                             <div class="col-form-label">
                                 <input class="col-sm-6-form-check-input" type="checkbox" id="ck1" name="ck1">
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="id_number" name="id_number" placeholder="ID"
+                                <input type="date" class="form-control" id="id_title" name="id_title" placeholder="ID"
                                     value="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="checkpro2" class="col-sm-3 col-form-label">Project Name</label>
+                            <label for="checkpro2" class="col-sm-3 col-form-label">Latitude</label>
                             <div class="col-form-label">
                                 <input class="col-sm-6-form-check-input" type="checkbox" id="ck2" name="ck2">
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="project_name" name="project_name"
-                                    placeholder="Project Name" value="">
+                                <input type="text" class="form-control" id="dtLatitude" name="dtLatitude"
+                                    placeholder="0.000000" value="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="checkpro3" class="col-sm-3 col-form-label">Member</label>
+                            <label for="checkpro2" class="col-sm-3 col-form-label">Longtitude</label>
                             <div class="col-form-label">
                                 <input class="col-sm-6-form-check-input" type="checkbox" id="ck3" name="ck3">
                             </div>
                             <div class="col-md-8">
-                                <select class="form-control" name="member">
-                                    <option value="">Find Your Member</option>
-
-                                </select>
+                                <input type="text" class="form-control" id="idLongtitude" name="dtLongtitude"
+                                    placeholder="0.000000" value="">
                             </div>
                         </div>
+
                         <button type="submit" class="btn btn-secondary">Search</button>
                         <a href='/projects' class="btn btn-danger">Reset</a>
                     </form>
@@ -70,72 +69,32 @@
             </div>
             <br>
 
-            <div class="card">
-                <br>
-
-                <h4 class="col-sm-4" style="color:rgb(47, 21, 80);border-radius: 5px;margin-top:0px;margin-left:30px;">
-                    Option Column</h4>
-
-                <fieldset class="form-group" style="margin-left:50px">
-                    <form method="POST" action="/projects/projectoptions">
-
-                        <div class="row">
-
-                            <legend class="col-sm-1 col-form-label"></legend>
-                            <label class="col-md-2 col-form-label" style="font-size: 14pt">Columns</label>
-                            <div class="custom-control custom-checkbox my-2 mr-sm-2">
-                                <input class="custom-control-input" type="checkbox" name="idcheckbox" id="checkbox1"
-                                    value="true">
-                                <label class="custom-control-label" for="checkbox1">
-                                    ID Project
-                                </label>
-                            </div>
-                            <div class="custom-control custom-checkbox my-2 mr-sm-2">
-                                <input class="custom-control-input" type="checkbox" name="namecheckbox" id="checkbox2"
-                                    value="true">
-                                <label class="custom-control-label" for="checkbox2">
-                                    Name
-                                </label>
-                            </div>
-                            <div class="custom-control custom-checkbox my-2 mr-sm-2">
-                                <input class="custom-control-input" type="checkbox" name="memberscheckbox"
-                                    id="checkbox3" value="true">
-                                <label class="custom-control-label" for="checkbox3">
-                                    Members
-                                </label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-outline-primary">Apply</button>
-                    </form>
-                </fieldset>
-            </div>
-
+            <a href='/projects/add' class="btn btn-outline-danger">Add</a></td>
             <div class="card table-responsive">
                 <div style="margin-left:50px;margin-right:100px">
                     <table class="table table-hover" id="example" class="display">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col1">Name</th>
+                                <th scope="col1">Title</th>
+                                <th scope="col">Latitude</th>
+                                <th scope="col">Longtitude</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+
+
                 </div>
-                <th scope="col">Members</th>
-                <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
 
-
-
-
-
-
-                </tbody>
-                </table>
-
-               
-
-                <a href='/projects/add' class="btn btn-outline-danger">Add</a></td>
             </div>
         </div>
 

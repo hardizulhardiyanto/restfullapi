@@ -1,94 +1,304 @@
 <% include partial/header %>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="container-fluid">
     <div class="row">
-        <div class="chartjs-size-monitor"
-            style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-            <div class="chartjs-size-monitor-expand"
-                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-            </div>
-            <div class="chartjs-size-monitor-shrink"
-                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-            </div>
-        </div>
+
         <div class="card-body">
             <div
-                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Data</h1>
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-10 pb-2 mb-3 border-bottom">
+                <h1 class="h2">List Data</h1>
             </div>
-
-            <div class="card">
-                <br>
-                <h4 class="col-sm-1"
-                    style="color:rgb(47, 21, 80);border-radius: 5px;margin-top:0px;margin-left:30px;font-size: 30px;">
-                    Filter</h4>
-
-                <div class="container">
-                    <form action="/projects" method="get">
-                        <input type="hidden" name="page" value="1">
-
-                        <div class="form-group row">
-                            <label for="checkpro1" class="col-sm-3 col-form-label">Letter</label>
-                            <div class="col-form-label">
-                                <input class="col-sm-6-form-check-input" type="checkbox" id="ck1" name="ck1">
+            <button id="addButton" class="btn btn-outline-danger">Add</button>
+            <br>
+            <br>
+            <div class="card" id="formadd" style="display: none">
+                <div class="card-header">
+                    <h5 class="card-header" style="background-color: cornflowerblue"><b>Form ADD</b></h5>
+                </div>
+                <div class="card-body" style="background-color: cornsilk">
+                    <form id="dataForm">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" id="dataLetter" placeholder="Letter">
                             </div>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="id_letter" name="id_letter" placeholder="ID"
-                                    value="">
+                            <div class="col">
+                                <input type="text" class="form-control" id="dataFrequency" placeholder="Frequency">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="checkpro2" class="col-sm-3 col-form-label">Frequency</label>
-                            <div class="col-form-label">
-                                <input class="col-sm-6-form-check-input" type="checkbox" id="ck2" name="ck2">
-                            </div>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="dtFrequency" name="dtFrequency"
-                                    placeholder="Frequency Data" value="">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-secondary">Search</button>
-                        <a href='/projects' class="btn btn-danger">Reset</a>
+                        <br>
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-save col-form-label">Save</span>
+                        </button>
                     </form>
                 </div>
-                <br>
-                <br>
             </div>
             <br>
 
-            <a href='/projects/add' class="btn btn-outline-danger">Add</a></td>
+            <div class="card-header">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-10 pb-2 mb-3 border-bottom">
+                    <h1 class="h3">Filter</h1>
+                </div>
+                <div class="card-body" style="background-color: rgb(29, 90, 139)">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" id="searchletter" name="id_letter"
+                                    placeholder="Data Letter">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="searchfrequency" name="dtFrequency"
+                                    placeholder="Data Frequency">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+
             <div class="card table-responsive">
                 <div style="margin-left:50px;margin-right:100px">
-                    <table class="table table-hover" id="example" class="display">
+                    <table class="table table-hover" class="display" id="table-data">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col1">Letter</th>
+                                <th scope="col">Letter</th>
                                 <th scope="col">Frequency</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
-
-
-
-
-
                         </tbody>
                     </table>
-
-
                 </div>
 
             </div>
         </div>
-
     </div>
 </div>
 </div>
 
-<% include partial/footer %>
+
+
+</body>
+
+<script>
+
+    $(document).ready(() => {
+        loadData();
+
+    })
+
+
+    //ADD DATA
+    $("#addButton").click(function () {
+        if ($('#formadd').is(":hidden")) {
+            showAddForm('Add Data');
+        } else {
+            $('#formadd').hide();
+        }
+    })
+
+    // Show Form Add
+    function showAddForm(data) {
+        $('#formadd').show();
+    }
+
+    // Api URL
+    let apiUrl = `http://localhost:3200/api/data`
+    let apiUrlAdd = `http://localhost:3200/api/data/add`
+    let apiUrlEdit = `http://localhost:3200/api/data/`
+    let id = ""
+
+    // load data From Table
+    const loadData = () => {
+        $.ajax({
+            url: `${apiUrl}`,
+            method: "GET",
+            dataType: "json"
+        }).done((response) => {
+
+            let rows = "";
+
+            response.forEach((item, i) => {
+                rows += `<tr>
+                                    <th scope="row">${i + 1}</th>
+                                    <td scope="col">${item.letter}</td>
+                                    <td scope="col">${item.frequency}</td>
+                                    <td scope="col">
+                                        <button type="submit" class="btn btn-success btn-edit" data-id='${JSON.stringify(item)}'><i class="fa fa-pencil"></i>Edit</button>
+                                        <button type="submit" class="btn btn-danger btn-delete" data-id='${item._id}'><i class="fa fa-trash"></i>Delete</button>
+                                    </td>
+                        </tr>`
+            });
+            $('#table-data tbody').html(rows)
+
+
+
+        }).fail((e) => {
+
+            console.log(e);
+
+        })
+    }
+
+    // Form Add Submit
+    $('#formadd').submit((e) => {
+        e.preventDefault();
+        saveData();
+    })
+
+    // EDIT/ADD DATA
+    $('table tbody').on('click', '.btn-edit', (el) => {
+
+
+        let item = JSON.parse(el.currentTarget.attributes['data-id'].nodeValue);
+        console.log('this data>', item);
+
+        $('#dataLetter').val(item.letter);
+        $('#dataFrequency').val(item.frequency);
+        $('#id').val(item._id);
+        $('#formadd form').show();
+        showAddForm("Edit Data")
+    })
+
+
+
+    // save data
+    function saveData() {
+
+        let letter = $('#dataLetter').val();
+        let frequency = $('#dataFrequency').val();
+        console.log(letter);
+        console.log(frequency);
+
+
+
+        if ($('#dataLetter').val() === "") {
+            console.log("Please Insert Letter");
+        } else {
+
+            if ($('#id').val() == '') {
+                $.ajax({
+                    url: apiUrlAdd,
+                    method: 'POST',
+                    data: {
+                        letter: letter,
+                        frequency: frequency
+                    }
+                }).done(data => {
+                    console.log(data);
+
+                    console.log("Data Has Been Added");
+                    $('#dataLetter').val('');
+                    $('#dataFrequency').val('');
+                    $('#formadd').hide();
+                    loadData();
+                })
+            } else {
+                console.log("masuk put");
+                $.ajax({
+                    url: apiUrlEdit + $('#id').val(),
+                    method: 'PUT',
+                    data: {
+                        letter,
+                        frequency
+                    }
+                }).done(data => {
+                    console.log(data);
+
+                    console.log("Data Has Been Edited");
+                    $('#dataLetter').val('');
+                    $('#dataFrequency').val('');
+                    $('#formadd').hide();
+                    loadData();
+                    id = "";
+                })
+            }
+        }
+    }
+
+    // Delete Data
+    $('table tbody').on('click', '.btn-delete', (el) => {
+        deleteData(el.currentTarget.attributes['data-id'].nodeValue)
+
+    })
+
+    const deleteData = (id) => {
+        let letter = $('#dataLetter').val();
+        let frequency = $('#dataFrequency').val();
+        console.log(id);
+
+        $.ajax({
+            url: apiUrlEdit + id,
+            method: "DELETE"
+        }).done(response => {
+            loadData()
+            alert("Delete This Data?")
+        })
+    }
+
+
+    // search data
+    $('#searchletter').keyup(function () {
+        $('#searchletter').val($('#searchletter').val());
+        browseData();
+    });
+
+    $('#searchfrequency').keyup(function () {
+        browseData();
+    });
+
+    function browseData() {
+        $('#formadd').hide();
+        let letter = $('#searchletter').val();
+        let frequency = $('#searchfrequency').val();
+        if (isNaN(frequency) === true && frequency != "") {
+            showAlert("Please insert number")
+        } else {
+
+            console.log("cek Database ON");
+
+            $.ajax({
+                url: apiUrlEdit + 'search',
+                method: 'POST',
+                data: {
+                    letter,
+                    frequency
+                }
+            }).done(data => {
+                console.log(data);
+
+                console.log("search success");
+
+
+                let rows = "";
+
+                data.forEach((item, i) => {
+                    rows += `<tr>
+                        <th scope="row">${i + 1}</th>
+                        <td scope="col">${item.letter}</td>
+                        <td scope="col">${item.frequency}</td>
+                        <td scope="col">
+                            <button type="submit" class="btn btn-success btn-edit" data-id='${JSON.stringify(item)}'><i class="fa fa-pencil"></i>Edit</button>
+                            <button type="submit" class="btn btn-danger btn-delete" data-id='${item._id}'><i class="fa fa-trash"></i>Delete</button>
+                        </td>
+            </tr>`
+                });
+                $('#table-data tbody').html(rows)
+
+
+
+            }).fail((e) => {
+
+                console.log(e);
+
+
+            })
+        }
+    }
+
+</script>
+
+</html>

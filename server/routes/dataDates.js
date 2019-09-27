@@ -3,8 +3,10 @@ var router = express.Router();
 const Dates = require('../models/dtDates');
 
 router.get('/', (req, res, next) => {
-    Dates.find().then((dataDates) => {
-        res.status(201).json(dataDates)
+    Dates.find().then((data) => {
+        console.log('dataDates >',data);
+        
+        res.status(201).json(data)
     })
 })
 

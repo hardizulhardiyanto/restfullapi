@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
     console.log("");
 
     DtMaps.find().then((mapsData) => {
+
         res.status(201).json(mapsData)
     })
 })
@@ -90,6 +91,8 @@ router.post('/search', function (req, res, next) {
     console.log("");
 
     let temp = {}
+    console.log('data body>', req.body);
+
     const { title, lat, lng } = req.body
 
     if (title) temp.title = title
@@ -97,6 +100,7 @@ router.post('/search', function (req, res, next) {
     if (lng) temp.lng = lng
 
     DtMaps.find(temp).then((searchdata) => {
+        console.log(searchdata);
 
         res.status(201).json(searchdata)
     })

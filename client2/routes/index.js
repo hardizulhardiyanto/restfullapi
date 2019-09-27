@@ -19,7 +19,17 @@ router.get('/login', function (req, res, next) {
   console.log("");
 
 
-  res.redirect('/home');
+  res.render('login');
+});
+
+router.get('/signup', function (req, res, next) {
+
+  console.log("");
+  console.log("=== Router GET INDEX/SIGN UP ===");
+  console.log("");
+
+
+  res.render('signup');
 });
 
 router.get('/home', (req, res) => {
@@ -73,5 +83,50 @@ router.get('/maps', (req, res) => {
     nav
   });
 })
+
+router.get('/bar', (req, res) => {
+  console.log("");
+  console.log("=== Router GET DATA BAR===");
+  console.log("");
+
+
+  res.render('bar', {
+    title: 'CMS/DataBar'
+  });
+})
+
+router.get('/pie', (req, res) => {
+  console.log("");
+  console.log("=== Router GET DATA BAR===");
+  console.log("");
+
+
+  res.render('pie', {
+    title: 'CMS/pie'
+  });
+})
+
+router.get('/line', (req, res) => {
+  console.log("");
+  console.log("=== Router GET DATA BAR===");
+  console.log("");
+
+
+  res.render('line', {
+    title: 'CMS/pie'
+  });
+})
+
+router.get('/gmaps', (req, res) => {
+  console.log("");
+  console.log("=== Router GET DATA BAR===");
+  console.log("");
+
+
+  res.render('gmaps', {
+    title: 'CMS/pie'
+  });
+})
+
 
 module.exports = router;

@@ -2,67 +2,100 @@ var express = require('express');
 var router = express.Router();
 const Todo = require('../models/data');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  Todo.find().then((data)=>{
+/* menampillkan data table. */
+router.get('/', function (req, res, next) {
+  Todo.find().then((data) => {
 
     res.status(201).json(data);
 
   });
 });
 
-router.post('/add', function(req, res, next) {
+/**Menambahkan data table */
+router.post('/add', function (req, res, next) {
   let todo = new Todo(req.body)
-  todo.save().then((todoCreated)=>{
-    res.status(201).json(todoCreated);
+  todo.save().then((todoAdd) => {
+    res.status(201).json({
+      success: true,
+      message: "Data Has Been Added",
+      data: {
+        _id: todoAdd._id,
+        letter: todoAdd.letter,
+        frequency: todoAdd.frequency
+      }
+    });
   })
 });
 
-router.put('/:id', function(req, res, next) {
+/**Edit Data Table */
+router.put('/:id', function (req, res, next) {
+  let id = req.params.id
+
+  console.log('');
+  console.log('data Params Edit >',id);
+  console.log('');
+  
+  
+  
   Todo.findOneAndUpdate(
-    {_id: req.params.id},
-    {letter: req.body.letter, frequency: req.body.frequency},
-    {new: true}
-  ).then((todoUpdated)=>{
-    res.status(201).json(todoUpdated);
+    { _id: req.params.id },
+    { letter: req.body.letter, frequency: req.body.frequency },
+    { new: true }
+  ).then((todoEdit) => {
+    res.status(201).json({
+      todoEdit: {
+        _id: todoEdit._id,
+        letter: todoEdit.letter,
+        frequency: todoEdit.frequency
+      }
+    });
   })
 });
 
-router.delete('/:id', function(req, res, next) {
-  Todo.findOneAndRemove({_id: req.params.id}).then((todoRemoved)=>{
+/**Delete data table berdasarkan id */
+router.delete('/:id', function (req, res, next) {
+  console.log("");
+  console.log('dataParams > ', req.params.id);
+  console.log("");
+  
+  
+  Todo.findOneAndRemove({ _id: req.params.id }).then((todoRemoved) => {
     res.status(201).json(todoRemoved);
   })
 });
 
+/**Search Data Table */
 router.post('/search', function (req, res, next) {
-    let temp = {}
-    const {frequency, letter } = req.body
+  let temp = {}
+  const { frequency, letter } = req.body
 
-    if (frequency) temp.frequency = frequency
-    if (letter) temp.letter = letter
+  if (frequency) temp.frequency = frequency
+  if (letter) temp.letter = letter
 
-    Todo.find(temp).then((searchdata) => {
-
-        res.status(201).json(searchdata)
-    })
+  Todo.find(temp).then((searchdata) => {
+    console.log(searchdata);
+    
+    res.status(201).json(searchdata)
+  })
 })
 
+/**Pencarian data tabel berdasarkan ID */
 router.get('/:id', (req, res, next) => {
-    
 
-    Todo.findById({_id: req.params.id}).then((Todo) => {
-      
-      
-      
-      res.status(201).json({
-        
-        success: true,
-        message: "succes!! Data Found",
-        Todo
-        
-      })
-      
+
+  Todo.findById({ _id: req.params.id }).then((Todo) => {
+
+
+
+    res.status(201).json({
+
+      success: true,
+      message: "succes!! Data Found",
+      Todo
+
     })
+
+  })
 
 })
 

@@ -9,6 +9,7 @@
     "seed": "node ./seeds/data.js"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "bootstrap": "^4.3.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",

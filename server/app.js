@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/data', dataRouter);
 app.use('/api/dataDates', dataDatesRouter);
 app.use('/api/dataMaps', dataMapsRouter);

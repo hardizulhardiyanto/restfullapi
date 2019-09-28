@@ -29,6 +29,9 @@ router.post('/add', function (req, res, next) {
 
 /**Edit Data Table */
 router.put('/:id', function (req, res, next) {
+
+  console.log("======== ROUTER DATA EDIT WORK ========");
+  
   let id = req.params.id
 
   console.log('');

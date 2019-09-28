@@ -85,6 +85,7 @@
 <script>
 
     $(document).ready(() => {
+        auth(localStorage.getItem("token"))
         loadData();
 
     })
@@ -257,26 +258,26 @@
     function browseData() {
         $('#formadd').hide();
         let title = $('#searchTitle').val();
-        
-
-            console.log("cek Database ON");
-
-            $.ajax({
-                url: apiUrlEdit + 'search',
-                method: 'POST',
-                data: {
-                    title
-                }
-            }).done(data => {
-                console.log(data);
-
-                console.log("search success");
 
 
-                let rows = "";
+        console.log("cek Database ON");
 
-                data.forEach((item, i) => {
-                    rows += `<tr>
+        $.ajax({
+            url: apiUrlEdit + 'search',
+            method: 'POST',
+            data: {
+                title
+            }
+        }).done(data => {
+            console.log(data);
+
+            console.log("search success");
+
+
+            let rows = "";
+
+            data.forEach((item, i) => {
+                rows += `<tr>
                             <th scope="row">${i + 1}</th>
                                             <td scope="col">${item.title}</td>
                                             <td scope="col">${item.lat}</td>
@@ -287,19 +288,35 @@
                                                 <button type="submit" class="btn btn-danger btn-delete" data-id='${item._id}'><i class="fa fa-trash"></i>Delete</button>
                                             </td>
                     </tr>`
-                });
-                $('#table-data tbody').html(rows)
+            });
+            $('#table-data tbody').html(rows)
 
 
 
-            }).fail((e) => {
+        }).fail((e) => {
 
-                console.log(e);
+            console.log(e);
 
 
-            })
-        
+        })
+
     }
+
+    const apiUrlUser = `http://localhost:3200/api/users/check`
+
+    const auth = () => {
+        $.ajax({
+            url: apiUrlUser,
+            method: "POST",
+            data: {
+                token: localStorage.getItem("token")
+            }
+        }).done(data => {
+            if (!data.valid) {
+                window.location = "/"
+            }
+        });
+    };
 
 </script>
 

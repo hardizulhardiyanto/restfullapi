@@ -87,6 +87,8 @@
 <script>
 
     $(document).ready(() => {
+
+        auth(localStorage.getItem("token"))
         loadData();
 
     })
@@ -298,6 +300,22 @@
             })
         }
     }
+
+    const apiUrlUser = `http://localhost:3200/api/users/check`
+
+    const auth = () => {
+        $.ajax({
+            url: apiUrlUser,
+            method: "POST",
+            data: {
+                token: localStorage.getItem("token")
+            }
+        }).done(data => {
+            if (!data.valid) {
+                window.location = "/"
+            }
+        });
+    };
 
 </script>
 

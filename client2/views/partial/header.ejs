@@ -113,7 +113,7 @@ body {
 
     </ul>
 
-    <form class="form-inline my-3 my-lg-0" action="/logout" method="GET">
+    <form class="form-inline my-3 my-lg-0" id="logout" method="GET">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Signout</button>
     </form>
 
@@ -121,3 +121,9 @@ body {
 </nav>
 
 <body>
+<script>
+  $("#logout").click(function () {
+    localStorage.clear(); 
+        
+  })
+</script>

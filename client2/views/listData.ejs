@@ -17,6 +17,8 @@
                 </div>
                 <div class="card-body" style="background-color: cornsilk">
                     <form id="dataForm">
+                        <input type="hidden" name="page" value="" id="id">
+
                         <div class="row">
                             <div class="col">
                                 <input type="text" class="form-control" id="dataLetter" placeholder="Letter">
@@ -86,6 +88,7 @@
 <script>
 
     $(document).ready(() => {
+        auth(localStorage.getItem("token"))
         loadData();
 
     })
@@ -173,13 +176,16 @@
         console.log(letter);
         console.log(frequency);
 
+        let id = $('#id').val()
+
+        console.log('data ID > ', id);
 
 
-        if ($('#dataLetter').val() === "") {
+        if ($('#dataLetter').val() == "") {
             console.log("Please Insert Letter");
         } else {
 
-            if ($('#id').val() == '') {
+            if ($('#id').val() == "") {
                 $.ajax({
                     url: apiUrlAdd,
                     method: 'POST',
@@ -298,6 +304,22 @@
             })
         }
     }
+
+    const apiUrlUser = `http://localhost:3200/api/users/check`
+
+    const auth = () => {
+        $.ajax({
+            url: apiUrlUser,
+            method: "POST",
+            data: {
+                token: localStorage.getItem("token")
+            }
+        }).done(data => {
+            if (!data.valid) {
+                window.location = "/"
+            }
+        });
+    };
 
 </script>
 
